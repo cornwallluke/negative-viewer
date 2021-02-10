@@ -25,13 +25,13 @@ export class AlbumComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    var carousel = document.querySelector('#carouselid')
+    var carousel:any = document.querySelector('#carouselid')
     const routeParams = this.route.snapshot.paramMap;
     this.name = routeParams.get("name") || undefined;
     const url = environment.api+"/picture/"+this.name
     this.http.get( url).subscribe((resp:any)=>{
       this.images = new Array(resp.images).fill("").map((_, index)=>{
-        return [environment.api+"/picture/"+this.name+"/"+index, index<3 || index>resp.images-2];
+        return [environment.api+"/picture/"+this.name+"/"+index, true];
       })
       carousel?.addEventListener('slide.bs.carousel', (ev:any)=>{
         this.images[(ev.to-1)%this.images.length][1] = true;

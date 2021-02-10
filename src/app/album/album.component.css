@@ -1,0 +1,18 @@
+.fit{
+    /* object-fit: contain; */
+    /* position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto; */
+
+    width: 100vw; 
+    height: 66vw;
+    max-height: 100vh;
+    max-width: 150vh;
+    margin: auto;
+    position: absolute;
+    top:0;bottom:0;
+    left:0;right:0;
+
+}
