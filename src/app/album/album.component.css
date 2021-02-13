@@ -1,10 +1,4 @@
-.fit{
-    /* object-fit: contain; */
-    /* position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    max-width: 100%;
-    max-height: 100%;
-    margin: auto; */
+/* .fit{
 
     width: 100vw; 
     height: 66vw;
@@ -15,4 +9,117 @@
     top:0;bottom:0;
     left:0;right:0;
 
+} */
+.cont{
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow-x: scroll;
+    overflow-y: show;
+    display: flex;
+
+    flex-direction: row;
+    align-items: center;
+    scroll-snap-type: x mandatory;
+}
+.mycol{
+    scroll-snap-align: center;
+    flex: 0 0 70%;
+    height: 95%;
+    padding-left: 1%;
+    padding-right: 1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.first{
+    margin-left: 15vw;
+}
+.myimg{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+
+    /* filter:; */
+}
+.spacetoscale{
+    height: 80%;
+}
+.fillercol{
+    flex: 0 0 100%;
+    width: 15vw;
+}
+.cont::-webkit-scrollbar {
+    display: none;
+}
+.cont.lightBox{
+    justify-content: center;
+    background-color: #222222dd;
+}
+.lightBox.closed{
+    display: none;
+}
+.box{
+    padding: 0 0 0 2%;
+    flex: 1 0 70%;
+    width: 100%;
+    height: 100%;
+}
+.toolbox{
+    padding: 0 2% 0 0;
+    flex: 0 1 20%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+.toolbox.mini{
+    flex: 0 1 5%;
+}
+.tools{
+    flex: 0 1 20%;
+    background-color: #121217;
+    border-radius: 0 10px 10px 0;
+
+    display: flex;
+
+    flex-direction: column;
+}
+.tools.mini{
+    flex: 0 1 10%;
+}
+.tool{
+    flex: 0 1 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+.tool.mini{
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.closer{
+    flex: 0 0 50%;
+    margin:2px;
+
+    
+    padding:2px 5px;
+    background-color: lightcoral;
+    border-radius: 30%;
+}
+.caret{
+    flex: 0 0 50%;
+    /* height: 100%; */
+    margin:2px;
+    padding:2px 4px;
+    background-color: mintcream;
+    border-radius: 30%;
 }

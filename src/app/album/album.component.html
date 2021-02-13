@@ -1,20 +1,35 @@
-<div class="container-fluid vh-100 p-0">
-    <div class="d-flex align-items-center justify-content-center h-100 w-100">
-        <!-- <img *ngFor="let im of images.slice(0,1); let i = index" [class.active]="!i" class="img-fluid" [src]="im[1] ? im[0] : ''" class="d-block mh-100 mw-100" alt="..."> -->
-        <div id="carouselid" class="carousel slide fit" data-bs-ride="carousel" data-interval="false">
-            <div class="carousel-inner h-100">
-                <div class="carousel-item h-100" *ngFor="let im of images; let i = index" [class.active]="!i">
-                    <img [src]="im[1] ? im[0] : ''" class="d-block mh-100 mw-100" alt="...">
-                </div>
+<div class="cont" id="holder">
+    <div class="mycol" *ngFor="let im of images; let i = index" [class.first]="!i" [class.last]="i===images.length-1">
+        <img 
+            class="myimg spacetoscale"
+            [src]="im.shown ? im.url : ''"
+            (click)="openLightBox($event, im)"
+            [ngStyle]="{
+
+                'filter':(im.showing ? filtersFromBlur(im.bluramt):''),
+                'z-index':(im.bluramt < .5 && im.bluramt > -0.5 ? '1' : '0'),
+                'transform':scaleFromBlur(im.bluramt)
+            }"
+        >
+    </div>
+    <!-- <div class="fillercol">
+        <a routerLink="/">Back</a>
+    </div> -->
+</div>
+<div id="mylightBox" class="cont lightBox" [class.closed]="!lightBoxing">
+    <div class="box">
+        <img class="myimg" [src]="lightBoxed.url">
+    </div>
+    <div class="toolbox" [class.mini]="editing">
+        <div class="tools" [class.mini]="editing">
+            <div class="tool" [class.mini]="editing">
+                <button class="closer" (click)="lightBoxing=false">
+                    &#10799;
+                </button>
+                <button class="caret" disabled (click)="editing = !editing">
+                    &#9650;
+                </button>
             </div>
-            <a class="carousel-control-prev" href="#carouselid" role="button" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-            <span class="visually-hidden">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselid" role="button" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-            <span class="visually-hidden">Next</span>
-            </a>
         </div>
     </div>
 </div>
