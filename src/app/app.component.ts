@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'photoviewer';
+  ngOnInit() {
+    // document.addEventListener('touchmove', (event) => {
+    //   console.log(event);
+    //   if(event.touches.length > 1){
+    //     event.preventDefault();
+    //   }
+    // });
+  }
 }

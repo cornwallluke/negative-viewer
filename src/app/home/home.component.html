@@ -1,11 +1,11 @@
 <div class="container-fluid">
   <div class="row justify-content-center">
-    <div class="col-8">
-      <div class="list-group mt-3">
-        <a class="list-group-item list-group-item-action" *ngFor="let al of albums" [routerLink]="'/album/'+al">
+    <ul class="col-8">
+      <li class="list-group mt-3" *ngFor="let al of albums">
+        <a class="list-group-item list-group-item-action"  [routerLink]="'/album/'+al">
           {{al}}
         </a>
-      </div>
-    </div>
+      </li>
+    </ul>
   </div>
 </div>

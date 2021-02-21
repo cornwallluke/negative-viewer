@@ -17,8 +17,10 @@
     height: 100vh;
     width: 100vw;
     overflow-x: scroll;
-    overflow-y: show;
+    overflow-y: hidden;
     display: flex;
+
+    touch-action: pan-x;
 
     flex-direction: row;
     align-items: center;
@@ -41,6 +43,7 @@
     position: relative;
     height: 100%;
     width: 100%;
+    /* overflow: scroll; */
     object-fit: contain;
 
     /* filter:; */
@@ -57,7 +60,8 @@
 }
 .cont.lightBox{
     justify-content: center;
-    background-color: #222222dd;
+    background-color: #000000EE;
+    overflow-x: hidden;
 }
 .lightBox.closed{
     display: none;
@@ -112,7 +116,7 @@
 
     
     padding:2px 5px;
-    background-color: lightcoral;
+    background-color: darkgrey;
     border-radius: 30%;
 }
 .caret{
@@ -120,6 +124,6 @@
     /* height: 100%; */
     margin:2px;
     padding:2px 4px;
-    background-color: mintcream;
+    background-color: darkgrey;
     border-radius: 30%;
 }

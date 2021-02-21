@@ -18,7 +18,7 @@
 </div>
 <div id="mylightBox" class="cont lightBox" [class.closed]="!lightBoxing">
     <div class="box">
-        <img class="myimg" [src]="lightBoxed.url">
+        <img class="myimg" [src]="lightBoxed.url" (mousedown)="lightboxDown()" (mouseup)="lightboxUp()" (drag)="enhance($event)">
     </div>
     <div class="toolbox" [class.mini]="editing">
         <div class="tools" [class.mini]="editing">

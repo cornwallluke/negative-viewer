@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { fromEvent } from 'rxjs';
-import { auditTime, map, takeWhile } from 'rxjs/operators'
+import { auditTime, debounceTime, map, takeWhile } from 'rxjs/operators'
 
 class imRef{
   url:string;
@@ -33,6 +33,8 @@ export class AlbumComponent implements OnInit {
   lightBoxing:boolean = false;
   lightBoxed:imRef = new imRef("");
   editing = true;
+
+  lastMdown = 0;
   
   carousel:Element | undefined;
   constructor(
@@ -45,12 +47,16 @@ export class AlbumComponent implements OnInit {
     var holder = document.querySelector('#holder');
     
     if(holder){
-      holder.addEventListener('wheel', (event)=>{
-        const wheelevent = event as WheelEvent
-        
-        const nextPos:number = holder!.scrollLeft + (wheelevent.deltaY > 0 ? 1 : -1)*window.innerWidth * IMWIDTH;
-        holder?.scroll({top:0, left:nextPos, behavior:'smooth'})
-      });
+      const hwheel = fromEvent(holder, 'wheel')
+      hwheel.pipe(
+        debounceTime(100),
+        map((event)=>{
+          const wheelevent = event as WheelEvent
+          
+          const nextPos:number = holder!.scrollLeft + (wheelevent.deltaY > 0 ? 1 : -1)*window.innerWidth * IMWIDTH;
+          holder?.scroll({top:0, left:nextPos, behavior:'smooth'})
+        })
+      ).subscribe();
       const src = fromEvent(holder!, 'scroll');
       src.pipe(
         takeWhile(()=>this.alive),
@@ -112,8 +118,6 @@ export class AlbumComponent implements OnInit {
         });
       })
     }
-
-    
   }
   ngOnDestroy() {
     this.alive = false;
@@ -128,12 +132,32 @@ export class AlbumComponent implements OnInit {
   filtersFromBlur(blur:number):string {
     const shad = Math.max(30-Math.abs(blur)*30, 0);
     let opt = "";
-    opt = `blur(${Math.abs(blur*8)}px) drop-shadow(${blur*70+20}px ${shad*1.3}px ${Math.abs(shad/3)}px #0F0F0FAA)`;
+    // opt = `drop-shadow(${blur*70+20}px ${shad*1.3}px ${Math.abs(shad/3)}px #0F0F0FAA)`;
     return `
+      blur(${Math.abs(blur*8)}px) 
       grayscale(${Math.abs(blur)*70}%)` + opt;
   }
 
   scaleFromBlur(blur:number):string {
     return `scale(${Math.max(1.1-Math.abs(blur*.2), 0.9)})`;
+  }
+  lightboxDown() {
+    this.lastMdown = new Date().getTime();
+  }
+  lightboxUp() {
+    if(new Date().getTime() - this.lastMdown < 300) {
+      this.lightBoxing = false;
+    }
+  }
+  enhance(event: MouseEvent) {
+    let tar = event.target as HTMLImageElement
+    let divaspect = tar.width / tar.height;
+    let nataspect = tar.naturalWidth / tar.naturalHeight;
+    if(divaspect > nataspect) {
+      event.offsetY //already correct:tm:
+    } else {
+      event.offsetX //already correct:tm:
+    }
+    console.log(event);
   }
 }
