@@ -31,6 +31,7 @@ export class AlbumComponent implements OnInit {
   images:imRef[] = [];
 
   lightBoxing:boolean = false;
+  zoomratio = 1;
   lightBoxed:imRef = new imRef("");
   editing = true;
 
@@ -98,6 +99,8 @@ export class AlbumComponent implements OnInit {
       lightBox.addEventListener("wheel", (event)=>{
         const wEvent = event as WheelEvent;
         console.log(wEvent.deltaY);
+        this.zoomratio *= wEvent.deltaY > 0 ? 1.1 : 1/1.1
+        event.preventDefault();
 
       })
     }
@@ -125,6 +128,7 @@ export class AlbumComponent implements OnInit {
   openLightBox(event:MouseEvent, image:imRef) {
     this.lightBoxing = true;
     this.lightBoxed.url = image.url;
+    this.zoomratio = 1;
   }
   // closeLightBox(event:MouseEvent) {
   //   console.log(event);
@@ -149,15 +153,28 @@ export class AlbumComponent implements OnInit {
       this.lightBoxing = false;
     }
   }
-  enhance(event: MouseEvent) {
-    let tar = event.target as HTMLImageElement
-    let divaspect = tar.width / tar.height;
-    let nataspect = tar.naturalWidth / tar.naturalHeight;
-    if(divaspect > nataspect) {
-      event.offsetY //already correct:tm:
-    } else {
-      event.offsetX //already correct:tm:
+
+  pgap:number|undefined;
+  pinching(event: TouchEvent) {
+    if(event.touches.length == 2) {
+
+    // window.alert("yooo");
+      const gap = Math.sqrt((event.touches[0].screenX-event.touches[1].screenX)**2+(event.touches[0].screenY-event.touches[1].screenY)**2);
+      if(this.pgap && Math.abs(gap-this.pgap)/gap < 0.1) {
+        this.zoomratio *= gap/this.pgap;
+      }
+      this.pgap = gap;
+
     }
-    console.log(event);
+  }
+  ploc:[number, number]|undefined;
+  dragscrolling(event: MouseEvent) {
+    // console.log(event);
+    const tar = event.target as HTMLElement;
+    const loc:[number, number] = [event.screenX, event.screenY]
+    if(this.ploc && Math.sqrt((this.ploc[0]-loc[0])**2+(this.ploc[1]-loc[1])**2) < 10){
+      tar.parentElement!.scrollBy({left: this.ploc[0] - loc[0], top: this.ploc[1] - loc[1]});
+    }
+    this.ploc = loc;
   }
 }
