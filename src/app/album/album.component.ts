@@ -136,7 +136,7 @@ export class AlbumComponent implements OnInit {
   filtersFromBlur(blur:number):string {
     const shad = Math.max(30-Math.abs(blur)*30, 0);
     let opt = "";
-    // opt = `drop-shadow(${blur*70+20}px ${shad*1.3}px ${Math.abs(shad/3)}px #0F0F0FAA)`;
+    opt = `drop-shadow(${blur*70+20}px ${shad*1.3}px ${Math.abs(shad/3)}px #0F0F0FAA)`;
     return `
       blur(${Math.abs(blur*8)}px) 
       grayscale(${Math.abs(blur)*70}%)` + opt;
@@ -149,7 +149,7 @@ export class AlbumComponent implements OnInit {
     this.lastMdown = new Date().getTime();
   }
   lightboxUp() {
-    if(new Date().getTime() - this.lastMdown < 300) {
+    if(new Date().getTime() - this.lastMdown < 300 || new Date().getTime() - (this.lastPinch || 0) < 300) {
       this.lightBoxing = false;
     }
   }
@@ -168,6 +168,7 @@ export class AlbumComponent implements OnInit {
     }
   }
   ploc:[number, number]|undefined;
+  lastPinch:number|undefined;
   dragscrolling(event: MouseEvent) {
     // console.log(event);
     const tar = event.target as HTMLElement;
@@ -176,5 +177,6 @@ export class AlbumComponent implements OnInit {
       tar.parentElement!.scrollBy({left: this.ploc[0] - loc[0], top: this.ploc[1] - loc[1]});
     }
     this.ploc = loc;
+    this.lastPinch = new Date().getTime();
   }
 }

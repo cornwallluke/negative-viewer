@@ -6,17 +6,21 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AlbumComponent } from './album/album.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AlbumUploaderComponent } from './album-uploader/album-uploader.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    AlbumComponent
+    AlbumComponent,
+    AlbumUploaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

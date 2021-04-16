@@ -75,13 +75,17 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
     touch-action: pan-x pan-y;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
 }
 .box::-webkit-scrollbar {
     display: none;
 }
-.box > .myimg{
-    height: calc(100% - 30px);
-    transform: translateX(50%) translateY(50%) scale(2);
+.lightboximg{
+    position: relative;
+    width: 100%;
+    /* transform: translate(-500px, -500px) scale(2); */
 }
 .toolbox{
     padding: 0 2% 0 0;

@@ -12,13 +12,13 @@
             }"
         >
     </div>
-    <!-- <div class="fillercol">
+    <div class="fillercol">
         <a routerLink="/">Back</a>
-    </div> -->
+    </div>
 </div>
 <div id="mylightBox" class="cont lightBox" [class.closed]="!lightBoxing">
     <div class="box" (drag)="dragscrolling($event)">
-        <img class="myimg"  [ngStyle]="{'transform':'translateY(-50%) translateX(-50%) scale('+zoomratio+') translateX(50%) translateY(50%) '}"[src]="lightBoxed.url" (mousedown)="lightboxDown()" (mouseup)="lightboxUp()" (touchmove)="pinching($event)">
+        <img class="lightboximg"  [ngStyle]="{'transform':'translateY(-50%) translateX(-50%) scale('+zoomratio+') translateX(50%) translateY(50%) '}"[src]="lightBoxed.url" (mousedown)="lightboxDown()" (mouseup)="lightboxUp()" (touchmove)="pinching($event)">
         <!-- (drag)="enhance($event)" -->
     </div>
     <div class="toolbox" [class.mini]="editing">

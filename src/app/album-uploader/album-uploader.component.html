@@ -1,0 +1,9 @@
+<div class="form-group">
+    <input type="file"
+           id="file"
+           multiple
+           (change)="fileSelected($event)">
+    <input type="text" [(ngModel)]="albumName">
+    <input type="button" value="upload" (click)="doUpload()">
+    <input type="checkbox" value="true" [(ngModel)]="negative">
+</div>
