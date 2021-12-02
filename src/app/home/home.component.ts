@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const url = environment.api+"/picture/"
+    const url = environment.api+"/albums"
     this.http.get( url).subscribe((resp:any)=>{
       // console.log(resp);
       this.albums = resp;

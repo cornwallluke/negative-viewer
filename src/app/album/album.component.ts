@@ -3,14 +3,14 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { fromEvent } from 'rxjs';
-import { auditTime, debounceTime, map, takeWhile } from 'rxjs/operators'
+import { auditTime, debounceTime, first, map, takeWhile } from 'rxjs/operators'
 
 class imRef{
-  url:string;
+  url?:string;
   shown:boolean;
   bluramt:number;
   showing:boolean;
-  constructor(url:string) {
+  constructor(url?:string) {
     this.url = url;
     this.shown = false;
     this.showing = false;
@@ -68,13 +68,13 @@ export class AlbumComponent implements OnInit {
           // console.log(target.scrollWidth, target.scrollLeft);
           
           if(this.allLoaded) return;
-    
-          for(let i = 0; i <= target.scrollLeft / (window.innerWidth * IMWIDTH)+ 3; i++){
+          const toshow = Math.min(this.images.length-1, target.scrollLeft / (window.innerWidth * IMWIDTH)+ 3)
+          for(let i = 0; i <= toshow; i++){
             this.images[i].shown = true;
           }
     
           
-          this.allLoaded=this.images.every((_, val)=>val);
+          this.allLoaded=this.images.every((im)=>im.shown);
         
         })
       ).subscribe();
@@ -108,11 +108,15 @@ export class AlbumComponent implements OnInit {
     const routeParams = this.route.snapshot.paramMap;
     this.name = routeParams.get("name") || undefined;
     if(this.name){
-      const url = environment.api+"/picture/"+this.name
+      const url = environment.api+"/albums/"+this.name
       this.http.get(url).subscribe((resp:any)=>{
         this.images = new Array(resp.images).fill("").map((_, index)=>{
-          const newRef = new imRef(environment.api+"/picture/"+this.name+"/"+index);
-          newRef.shown = index <3;
+          const newRef = new imRef();
+          newRef.shown = index <3;  
+          this.http.get(environment.api+"/albums/"+this.name+"/"+index).pipe(first()).subscribe((resp:any) => {
+            newRef.url = resp.url;
+            
+          })
           return newRef;
         })
         this.images.forEach((im, index)=>{

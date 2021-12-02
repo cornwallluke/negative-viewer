@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "photoviewer": {
+    "negative-viewer2": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/photoviewer",
+            "outputPath": "dist/negative-viewer2",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -30,8 +30,7 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -66,18 +65,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "photoviewer:build"
+            "browserTarget": "negative-viewer2:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "photoviewer:build:production"
+              "browserTarget": "negative-viewer2:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "photoviewer:build"
+            "browserTarget": "negative-viewer2:build"
           }
         },
         "test": {
@@ -114,18 +113,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "photoviewer:serve"
+            "devServerTarget": "negative-viewer2:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "photoviewer:serve:production"
+              "devServerTarget": "negative-viewer2:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "photoviewer",
+  "defaultProject": "negative-viewer2",
   "cli": {
     "analytics": false
   }
